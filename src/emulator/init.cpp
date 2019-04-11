@@ -30,6 +30,7 @@
 
 #include <SDL_filesystem.h>
 #include <SDL_video.h>
+#include <SDL_messagebox.h>
 #include <glbinding-aux/types_to_string.h>
 #include <glbinding/Binding.h>
 #include <microprofile.h>
@@ -136,6 +137,8 @@ bool init(HostState &state, Config cfg) {
     state.glcontext = GLContextPtr(SDL_GL_CreateContext(state.window.get()), SDL_GL_DeleteContext);
     if (!state.glcontext) {
         LOG_ERROR("Could not create OpenGL context.");
+
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Could not create OpenGL context!\nDoes your GPU support OpenGL 4.1?", NULL);
         return false;
     }
 
